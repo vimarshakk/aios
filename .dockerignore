@@ -1,0 +1,63 @@
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.egg-info
+dist
+build
+.eggs
+
+# Virtual environments
+.venv
+venv
+env
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Testing
+.coverage
+htmlcov
+.pytest_cache
+
+# Type checking
+.mypy_cache
+.pytype
+.pyre
+
+# Ruff
+.ruff_cache
+
+# Data
+data
+*.db
+*.sqlite3
+
+# Vendor
+vendor
+
+# Node
+node_modules
+.pnpm-store
+
+# Logs
+*.log
+logs
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Build
+*.egg
+*.whl
+*.tar.gz
+*.zip
