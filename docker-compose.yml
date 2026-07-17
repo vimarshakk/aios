@@ -1,0 +1,43 @@
+services:
+  gateway:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - AIOS_GATEWAY_PORT=8080
+      - AIOS_LOG_LEVEL=info
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    volumes:
+      - aios-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  orchestrator:
+    build: .
+    command: ["uv", "run", "python", "-m", "aios.orchestrator.main"]
+    environment:
+      - AIOS_ORCHESTRATOR_PORT=8081
+      - AIOS_LOG_LEVEL=info
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+  mcp:
+    build: .
+    command: ["uv", "run", "python", "-m", "aios.mcp.server"]
+    environment:
+      - AIOS_MCP_PORT=8082
+      - AIOS_LOG_LEVEL=info
+    ports:
+      - "8082:8082"
+    restart: unless-stopped
+
+volumes:
+  aios-data:
+    driver: local
