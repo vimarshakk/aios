@@ -1,6 +1,3 @@
-// Stub: this module is referenced by legacy app pages and M17 tests.
-// The Desktop app (src/desktop/) uses its own API client at src/desktop/services/api.ts
-
 const BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
 async function http<T>(path: string, init?: RequestInit): Promise<T> {
@@ -49,6 +46,19 @@ export type GoalStep = {
   status: string;
 };
 
+export type RepositoryInfo = {
+  id: string;
+  name: string;
+  path: string;
+  branch: string;
+  status: string;
+  language: string;
+  files: number;
+  lastCommit?: string;
+  workers: string[];
+  uncommittedChanges: number;
+};
+
 export const api = {
   async getTools(): Promise<ToolInfo[]> { return http("/tools"); },
   async getAgents(): Promise<AgentInfo[]> { return http("/agents"); },
@@ -58,6 +68,9 @@ export const api = {
   workforce: {
     async listWorkers(): Promise<Record<string, unknown>[]> {
       return http("/workforce/workers");
+    },
+    async getWorker(id: string): Promise<Record<string, unknown>> {
+      return http(`/workforce/workers/${encodeURIComponent(id)}`);
     },
     async findByCapability(capability: string): Promise<Record<string, unknown>[]> {
       return http(`/workforce/capability/${encodeURIComponent(capability)}`);
@@ -115,6 +128,15 @@ export const api = {
     },
     async getState(): Promise<Record<string, unknown>> {
       return http("/review/state");
+    },
+  },
+
+  repositories: {
+    async list(): Promise<RepositoryInfo[]> {
+      return http("/repositories");
+    },
+    async get(id: string): Promise<RepositoryInfo> {
+      return http(`/repositories/${encodeURIComponent(id)}`);
     },
   },
 
