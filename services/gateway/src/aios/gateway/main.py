@@ -901,6 +901,32 @@ async def workforce_state() -> dict[str, Any]:
     return {"workers": list(_workforce_store), "count": len(_workforce_store)}
 
 
+# In-memory repository store
+_DEFAULT_REPOSITORIES: list[dict[str, Any]] = [
+    {"id": "aios", "name": "aios", "path": "/Users/dev/aios", "branch": "main", "status": "active", "language": "TypeScript", "files": 247, "lastCommit": "feat: M17 integration pass", "workers": ["backend", "frontend"], "uncommittedChanges": 0},
+    {"id": "aios-desktop", "name": "aios-desktop", "path": "/Users/dev/aios-desktop", "branch": "feature/m17", "status": "active", "language": "TypeScript", "files": 89, "lastCommit": "feat: workforce panel", "workers": ["frontend"], "uncommittedChanges": 3},
+    {"id": "aios-gateway", "name": "aios-gateway", "path": "/Users/dev/aios-gateway", "branch": "main", "status": "idle", "language": "Python", "files": 42, "lastCommit": "fix: health endpoint", "workers": [], "uncommittedChanges": 0},
+]
+
+_repository_store: list[dict[str, Any]] = list(_DEFAULT_REPOSITORIES)
+
+
+@app.get("/repositories")
+async def repository_list() -> list[dict[str, Any]]:
+    """List all indexed repositories."""
+    return list(_repository_store)
+
+
+@app.get("/repositories/{repo_id}")
+async def repository_get(repo_id: str) -> dict[str, Any]:
+    """Get a single repository by ID."""
+    for r in _repository_store:
+        if r["id"] == repo_id:
+            return r
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail=f"repository {repo_id!r} not found")
+
+
 @app.get("/cli/active")
 async def cli_active() -> list[dict[str, Any]]:
     """List active CLI processes."""

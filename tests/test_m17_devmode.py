@@ -380,7 +380,8 @@ class TestIPCWiring:
 
     def test_registry_includes_devmode(self):
         content = read_file(os.path.join(WEB_DIR, "workspaces", "registry.tsx"))
-        assert "DevMode" in content or "devmode" in content.lower()
+        # M17.2: dedicated workspace components replace the monolithic DevModeWorkspace
+        assert "WorkforceWorkspace" in content or "dev-workforce" in content
 
     def test_registry_has_shortcut(self):
         content = read_file(os.path.join(WEB_DIR, "workspaces", "registry.tsx"))

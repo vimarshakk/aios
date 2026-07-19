@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-07-20
+
+### Added
+- M17.1: Gateway endpoints (15+), frontend API client, full integration pass — 241 tests passing
+- M17.2: Dedicated workspace components replacing monolithic DevModeWorkspace
+  - `WorkforceWorkspace` — worker cards, status badges, task graph
+  - `RepositoriesWorkspace` — repo cards, search, file count, language badges
+  - `ConsolesWorkspace` — terminal sessions with elapsed timer
+  - `ReviewsWorkspace` — review cards with approve/reject workflow
+- M17.2: `/repositories` and `/repositories/{repo_id}` gateway endpoints
+- M17.2: `RepositoryInfo` type in frontend API client
+
 ### Added
 
 - Initial project structure and architecture
