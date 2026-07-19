@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.14.1] - 2026-07-20
+
+### Fixed
+- Next.js 16 / Turbopack production build now compiles cleanly (TypeScript check passes)
+- Added missing frontend API client methods referenced by legacy workspace components:
+  `streamChat`, `createGoal`, `listGoals`, `subscribeAllGoals`, `pauseGoal`/`resumeGoal`/`cancelGoal`,
+  `recentMemory`/`searchMemory`/`rememberMemory`, memory graph/workspace/hybrid-search/export/import stubs,
+  `listProjects`/`scanProjects`, and `health`/`tools` backward-compat aliases
+- Fixed Lucide icon usage: `MetricCard` now accepts a `LucideIcon` and renders it; `Dock` wraps icons in `<span>`
+- Added `SpeechRecognition` ambient DOM types; expanded `VoiceEvent` union and fixed `VoiceClient` API surface
+- Repaired `Conversation`, `Goals`, `Memory`, `MemoryExplorer`, `Projects`, `MissionControl`, `Settings`,
+  `Agents`, `Skills`, `Logs` against real API/type shapes
+- Fixed `registry.tsx` component loaders to map named exports (MissionControl, Conversation, Goals, etc.)
+  and default exports (M17.2 dedicated workspaces)
+- Deleted dead `DevMode.tsx` (superseded by M17.2 dedicated workspace components)
+- Updated M17 tests to validate the M17.2 dedicated workspace architecture
+- Verified: `npx next build` clean, `pytest` 243 passed
+
 ## [0.14.0] - 2026-07-20
 
 ### Added
