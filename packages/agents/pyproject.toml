@@ -1,0 +1,16 @@
+[project]
+name = "aios-agents"
+version = "0.3.0"
+description = "AIOS Agent framework — Registry, EventBus, ABCs, and typed primitives"
+requires-python = ">=3.11,<3.14"
+license = "Apache-2.0"
+dependencies = [
+    "aios-core",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aios"]
