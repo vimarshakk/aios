@@ -1,0 +1,32 @@
+[project]
+name = "aios-gateway"
+version = "0.7.0"
+description = "AIOS API Gateway — FastAPI + tRPC bridge, WebSocket, REST"
+requires-python = ">=3.11,<3.14"
+license = "Apache-2.0"
+dependencies = [
+    "aios-core",
+    "aios-agents",
+    "aios-orchestrator",
+    "aios-memory",
+    "aios-tools",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "websockets>=13.0",
+    "pydantic>=2.10.0",
+]
+
+[project.scripts]
+aios-gateway = "aios.gateway.main:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aios"]
+
+[dependency-groups]
+dev = [
+    "httpx2>=0.28",
+]
