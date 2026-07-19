@@ -1,0 +1,40 @@
+appId: com.aios.desktop
+productName: AIOS
+directories:
+  output: release
+  buildResources: assets
+files:
+  - "dist/**/*"
+  - "out/**/*"
+  - "!node_modules"
+  - "!src"
+  - "!scripts"
+  - "!tsconfig*.json"
+mac:
+  category: public.app-category.developer-tools
+  icon: assets/icon.icns
+  target:
+    - dmg
+    - zip
+  hardenedRuntime: true
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+win:
+  icon: assets/icon.ico
+  target:
+    - nsis
+    - portable
+  publisherName: AIOS
+linux:
+  icon: assets/icon.png
+  target:
+    - AppImage
+    - deb
+  category: Development
+  maintainer: AIOS Team
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: AIOS
