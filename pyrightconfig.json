@@ -1,0 +1,28 @@
+[tool.pyright]
+include = ["packages/**/src", "services/**/src"]
+exclude = ["**/node_modules", "**/__pycache__", "**/vendor"]
+
+pythonVersion = "3.12"
+pythonPlatform = "All"
+
+typeCheckingMode = "basic"
+
+reportMissingImports = true
+reportMissingTypeStubs = false
+reportUnusedImports = true
+reportUnusedVariable = true
+reportUnnecessaryTypeIgnoreComment = true
+reportUntypedFunctionDecorator = false
+reportUntypedClassDecorator = false
+
+# Strict mode options
+reportCallIssue = true
+reportArgumentType = true
+reportGeneralClassIssues = true
+reportImplicitOverride = true
+reportPropertyTypeMismatch = true
+reportMissingParameterType = true
+
+# Style
+useLibraryCodeForTypes = true
+autoImportCompletions = true
