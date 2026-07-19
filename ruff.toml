@@ -1,0 +1,65 @@
+line-length = 100
+target-version = "py312"
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "A",    # flake8-builtins
+    "C4",   # flake8-comprehensions
+    "DTZ",  # flake8-datetimez
+    "T20",  # flake8-print
+    "RET",  # flake8-return
+    "SLF",  # flake8-self
+    "SIM",  # flake8-simplify
+    "TCH",  # flake8-type-checking
+    "ARG",  # flake8-unused-arguments
+    "PTH",  # flake8-use-pathlib
+    "ERA",  # flake8-eradicate
+    "PD",   # flake8-pandas
+    "PGH",  # flake8-pyi
+    "BLE",  # flake8-blind-except
+    "FBT",  # flake8-boolean-trap
+    "ICN",  # flake8-import-conventions
+    "INP",  # flake8-no-pep420
+    "PIE",  # flake8-pie
+    "PT",   # flake8-pytest-style
+    "RSE",  # flake8-raise
+    "RUF",  # Ruff-specific rules
+    "S",    # flake8-bandit
+    "T10",  # flake8-debugger
+    "TRY",  # tryceratops
+    "PERF", # perflint
+    "FURB", # refurb
+    "LOG",  # flake8-logging
+]
+ignore = [
+    "S101",   # assert used (fine in tests)
+    "TRY003", # long exception messages
+    "TRY004", # ValueError vs TypeError for invalid type (style preference)
+    "ERA001", # commented-out code (may be useful)
+    "T201",   # print found (used in CLI)
+    "INP001", # implicit namespace package
+]
+
+[lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "ARG", "SLF001", "BLE001", "TRY300", "FBT001", "FBT002", "FBT003", "PERF401", "TC003", "PT018", "S605"]
+"scripts/**/*.py" = ["T20", "S"]
+"**/conftest.py" = ["S101"]
+"packages/**/src/**/*.py" = ["SLF001", "BLE001", "TRY300"]
+"packages/secrets/**/*.py" = ["S310"]
+"packages/agents/src/aios/agents/specialized/**/*.py" = ["ARG002"]
+"packages/providers/src/aios/providers/**/*.py" = ["ARG002"]
+"packages/tools/src/aios/tools/**/*.py" = ["ARG002"]
+"services/mcp/**/*.py" = ["FBT001", "FBT002", "FBT003", "BLE001", "T201"]
+"services/supervisor/src/aios/supervisor/cli.py" = ["FBT001", "FBT002", "FBT003", "E501"]
+
+[lint.isort]
+known-first-party = ["aios"]
+
+
