@@ -150,6 +150,21 @@ export interface BuildArtifact {
   size?: number;
 }
 
+export interface Repository {
+  id: string;
+  name: string;
+  path: string;
+  url?: string;
+  branch: string;
+  status: "active" | "idle" | "error" | "building";
+  language: string;
+  files: number;
+  lastCommit?: string;
+  lastCommitAt?: number;
+  workers: string[];
+  uncommittedChanges: number;
+}
+
 export interface DevModeState {
   workers: Worker[];
   taskGraph: TaskNode[];

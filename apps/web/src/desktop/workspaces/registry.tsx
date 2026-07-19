@@ -191,11 +191,10 @@ const COMPONENT_LOADERS: Record<string, () => Promise<{ default: ComponentType }
   "skills": () => import("./Skills").then(m => m),
   "logs": () => import("./Logs").then(m => m),
   "settings": () => import("./Settings").then(m => m),
-  "dev-workforce": () => import("./DevMode").then(m => m),
-  // Dev tabs use DevMode wrapper (resolves to DevMode tab content)
-  "dev-repositories": () => import("./DevMode").then(m => m),
-  "dev-consoles": () => import("./DevMode").then(m => m),
-  "dev-reviews": () => import("./DevMode").then(m => m),
+  "dev-workforce": () => import("./WorkforceWorkspace").then(m => m),
+  "dev-repositories": () => import("./RepositoriesWorkspace").then(m => m),
+  "dev-consoles": () => import("./ConsolesWorkspace").then(m => m),
+  "dev-reviews": () => import("./ReviewsWorkspace").then(m => m),
 };
 
 // Resolve components eagerly for simplicity (Next.js bundler handles code-splitting)
@@ -218,10 +217,10 @@ function resolveComponents() {
   try { components["skills"] = require("./Skills").SkillsWorkspace; } catch {}
   try { components["logs"] = require("./Logs").LogsWorkspace; } catch {}
   try { components["settings"] = require("./Settings").SettingsWorkspace; } catch {}
-  try { components["dev-workforce"] = require("./DevMode").DevModeWorkspace; } catch {}
-  try { components["dev-repositories"] = require("./DevMode").DevModeWorkspace; } catch {}
-  try { components["dev-consoles"] = require("./DevMode").DevModeWorkspace; } catch {}
-  try { components["dev-reviews"] = require("./DevMode").DevModeWorkspace; } catch {}
+  try { components["dev-workforce"] = require("./WorkforceWorkspace").WorkforceWorkspace; } catch {}
+  try { components["dev-repositories"] = require("./RepositoriesWorkspace").RepositoriesWorkspace; } catch {}
+  try { components["dev-consoles"] = require("./ConsolesWorkspace").ConsolesWorkspace; } catch {}
+  try { components["dev-reviews"] = require("./ReviewsWorkspace").ReviewsWorkspace; } catch {}
 
   resolvedComponents = components;
 }
