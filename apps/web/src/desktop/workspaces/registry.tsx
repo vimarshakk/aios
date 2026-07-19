@@ -266,8 +266,5 @@ export function searchWorkspaces(query: string, mode?: AppMode): WorkspaceDefini
     }));
 }
 
-// Backward compat: export flat `workspaces` array for code that still uses it
-export function get workspaces(): WorkspaceDefinition[] {
-  // Default to normal mode; callers should migrate to getWorkspacesForMode()
-  return getWorkspacesForMode("normal");
-}
+// Backward compat: flat `workspaces` array for code that still uses it
+export const workspaces: WorkspaceDefinition[] = getWorkspacesForMode("normal");
