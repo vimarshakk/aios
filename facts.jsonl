@@ -1,0 +1,4 @@
+{"id": "55051fd2727e", "subject": "Alice", "predicate": "works_at", "obj": "Google", "confidence": 0.8, "source": "consolidation", "metadata": {}}
+{"id": "fd354daa892b", "subject": "Alice", "predicate": "knows", "obj": "Bob", "confidence": 0.8, "source": "consolidation", "metadata": {}}
+{"id": "9e700b97ae8b", "subject": "Bob", "predicate": "is_a", "obj": "doctor", "confidence": 0.8, "source": "consolidation", "metadata": {}}
+{"id": "f1", "subject": "A", "predicate": "r", "obj": "B", "confidence": 0.9, "source": "", "metadata": {}}

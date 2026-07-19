@@ -1,0 +1,18 @@
+[project]
+name = "aios-scheduler"
+version = "0.3.0"
+description = "AIOS Scheduler — cron-like task scheduling with agent integration"
+requires-python = ">=3.11,<3.14"
+license = "Apache-2.0"
+dependencies = [
+    "aios-core",
+    "aios-agents",
+    "apscheduler>=3.10.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aios"]

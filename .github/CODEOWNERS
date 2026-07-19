@@ -1,0 +1,44 @@
+# This file defines code owners for the repository.
+# It is used by GitHub to automatically request reviews from the right people.
+
+# Default owners for everything
+* @vimarshakk
+
+# Core packages
+/packages/agents/ @vimarshakk
+/packages/memory/ @vimarshakk
+/packages/context/ @vimarshakk
+/packages/core/ @vimarshakk
+/packages/tools/ @vimarshakk
+/packages/voice/ @vimarshakk
+/packages/security/ @vimarshakk
+/packages/telemetry/ @vimarshakk
+/packages/plugins/ @vimarshakk
+/packages/providers/ @vimarshakk
+/packages/scheduler/ @vimarshakk
+/packages/sdk/ @vimarshakk
+/packages/workflows/ @vimarshakk
+
+# Services
+/services/gateway/ @vimarshakk
+/services/orchestrator/ @vimarshakk
+/services/mcp/ @vimarshakk
+/services/search/ @vimarshakk
+/services/telemetry/ @vimarshakk
+/services/vector/ @vimarshakk
+
+# Apps
+/apps/desktop/ @vimarshakk
+/apps/web/ @vimarshakk
+/apps/mobile/ @vimarshakk
+/apps/server/ @vimarshakk
+
+# Infrastructure
+/.github/ @vimarshakk
+/infrastructure/ @vimarshakk
+/Dockerfile @vimarshakk
+/docker-compose.yml @vimarshakk
+
+# Documentation
+/docs/ @vimarshakk
+*.md @vimarshakk
