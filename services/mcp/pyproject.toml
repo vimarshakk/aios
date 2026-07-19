@@ -1,0 +1,20 @@
+[project]
+name = "aios-mcp-service"
+version = "0.1.0"
+description = "AIOS MCP Service — registry, discovery, and permission-gated MCP surface"
+requires-python = ">=3.11,<3.14"
+license = "Apache-2.0"
+dependencies = [
+    "aios-mcp",
+    "aios-agents",
+]
+
+[project.scripts]
+aios-mcp-server = "aios.mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aios"]
