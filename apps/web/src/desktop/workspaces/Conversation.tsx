@@ -56,7 +56,7 @@ export function ConversationWorkspace() {
     if (el) el.scrollTop = el.scrollHeight;
   }, [messages, streaming]);
 
-  const handleExecute = useCallback((text: string, opts: { agent: string; model: string }) => {
+  const handleExecute = useCallback((text: string, opts: { agent: string; model?: string }) => {
     const userMsg: Message = {
       id: `u-${Date.now()}`,
       role: "user",
@@ -116,7 +116,7 @@ export function ConversationWorkspace() {
           setMessages((prev) =>
             prev.map((m) =>
               m.id === assistantId
-                ? { ...m, tools: [...(m.tools ?? []), { name: tool, status: "running" }] }
+                ? { ...m, tools: [...(m.tools ?? []), { name: tool.name, status: "running" as const }] }
                 : m,
             ),
           );

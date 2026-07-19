@@ -177,7 +177,7 @@ function ModelSettings() {
 
   useEffect(() => {
     api.models().then((data: ModelInfo[]) => {
-      const names = data.map((m) => m.id);
+      const names = data.map((m) => m.id ?? m.name).filter((n): n is string => Boolean(n));
       setModels(names);
       if (names.length > 0 && !names.includes(selectedModel)) {
         setSelectedModel(names[0]);

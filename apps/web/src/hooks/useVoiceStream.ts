@@ -116,8 +116,8 @@ export function useVoiceStream(options: UseVoiceStreamOptions = {}) {
     const client = new VoiceClient({
       agent: options.agent,
       model: options.model,
-      onEvent: handleEvent,
     });
+    client.on(handleEvent);
     clientRef.current = client;
 
     if (options.autoConnect) {
@@ -146,13 +146,12 @@ export function useVoiceStream(options: UseVoiceStreamOptions = {}) {
     }
     const effectiveMode = newMode ?? (alwaysOn ? "always_on" : "push_to_talk");
     if (newMode) setMode(newMode);
-    client.start(effectiveMode, options.agent, options.model);
-    await client.startCapture();
+    client.start();
+    client.setMode(effectiveMode);
   }, [alwaysOn, options.agent, options.model]);
 
   const stopListening = useCallback(() => {
     clientRef.current?.stop();
-    clientRef.current?.stopCapture();
   }, []);
 
   const interrupt = useCallback(() => {

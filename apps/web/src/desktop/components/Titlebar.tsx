@@ -16,8 +16,8 @@ export function Titlebar() {
 
   useEffect(() => {
     if (isDesktop()) {
-      window.aios.app.platform().then(setPlatform);
-      window.aios.window.isVisible().then(() => {
+      window.aios?.app.platform().then(setPlatform);
+      window.aios?.window.isVisible().then(() => {
         // Track maximize state
       });
     }

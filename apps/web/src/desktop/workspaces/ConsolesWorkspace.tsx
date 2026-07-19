@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { LiveConsole } from "../components/devmode/LiveConsole";
 import { api } from "@/lib/api";
-import type { Worker } from "../types";
+import type { Worker, WorkerRole } from "../types";
 import { Terminal, Cpu, Clock, Zap } from "lucide-react";
 
 export function ConsolesWorkspace() {
@@ -21,7 +21,7 @@ export function ConsolesWorkspace() {
         type: "cli" as const,
         command: (w.cli as string) || "",
         status: (w.status as string) === "running" ? "running" : (w.status as string) === "error" ? "error" : (w.status as string) === "busy" ? "busy" : "idle",
-        role: (w.role as string) || "backend",
+        role: ((w.role as string) || "backend") as WorkerRole,
         capabilities: [],
         tokensUsed: 0,
         cost: 0,

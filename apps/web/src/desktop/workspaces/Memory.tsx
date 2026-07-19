@@ -221,7 +221,7 @@ export function MemoryWorkspace() {
                   {memory.content}
                 </p>
                 <span className="memory-confidence">
-                  {Math.round(memory.confidence * 100)}%
+                  {Math.round((memory.confidence ?? 1) * 100)}%
                 </span>
               </button>
 
@@ -240,7 +240,7 @@ export function MemoryWorkspace() {
                   <div className="memory-meta">
                     <span className="flex items-center gap-1">
                       <Clock size={12} />
-                      {memory.created_at}
+                      {memory.created_at ?? memory.createdAt}
                     </span>
                     <span>Type: {typeCfg.label}</span>
                     {memory.source && <span>Source: {memory.source}</span>}

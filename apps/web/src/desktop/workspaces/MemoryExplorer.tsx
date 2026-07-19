@@ -163,7 +163,7 @@ function WorkspacesTab() {
     try {
       setLoading(true);
       const data = await api.listWorkspaces();
-      setWorkspaces(data.workspaces ?? []);
+      setWorkspaces((data ?? []).map((w) => w.id));
     } catch { setWorkspaces([]); } finally { setLoading(false); }
   }, []);
 
@@ -204,7 +204,13 @@ function WorkspacesTab() {
     setSearching(true);
     try {
       const data = await api.workspaceSearch(selectedWs, searchQuery.trim());
-      setSearchResults(data.results ?? []);
+      setSearchResults(
+        (data ?? []).map((m) => ({
+          content: m.content,
+          score: m.confidence ?? 1,
+          metadata: { id: m.id, type: m.type, tags: m.tags },
+        })),
+      );
     } catch { setSearchResults([]); } finally { setSearching(false); }
   };
 
@@ -346,9 +352,25 @@ function GraphTab() {
         api.graphEdges(undefined, 100),
         api.graphComponents(),
       ]);
-      setNodes(nRes.nodes ?? []);
-      setEdges(eRes.edges ?? []);
-      setComponents((cRes.components as unknown as Array<{ size: number; representative: string }>) ?? []);
+      setNodes(
+        (nRes ?? []).map((n) => ({
+          id: String(n.id ?? ""),
+          label: String(n.label ?? n.id ?? ""),
+          node_type: String(n.node_type ?? n.type ?? "entity"),
+          properties: (n.properties as Record<string, unknown>) ?? {},
+        })),
+      );
+      setEdges(
+        (eRes ?? []).map((e) => ({
+          id: String(e.id ?? ""),
+          source_id: String(e.source ?? e.source_id ?? ""),
+          target_id: String(e.target ?? e.target_id ?? ""),
+          relation: String(e.relation ?? e.type ?? "related"),
+          weight: Number(e.weight ?? 1),
+          properties: (e.properties as Record<string, unknown>) ?? {},
+        })),
+      );
+      setComponents((cRes as unknown as Array<{ size: number; representative: string }>) ?? []);
     } catch { /* ignore */ } finally { setLoading(false); }
   }, [typeFilter]);
 
@@ -459,7 +481,14 @@ function HybridSearchTab() {
     setLoading(true);
     try {
       const data = await api.hybridSearch(query.trim(), 20, { use_vector: useVector, use_graph: useGraph, use_keyword: useKeyword });
-      setResults(data.results ?? []);
+      setResults(
+        (data ?? []).map((r) => ({
+          content: String(r.content ?? ""),
+          source: String(r.source ?? ""),
+          score: Number(r.score ?? 1),
+          metadata: (r.metadata as Record<string, unknown>) ?? {},
+        })),
+      );
     } catch { setResults([]); } finally { setLoading(false); }
   };
 
@@ -532,7 +561,7 @@ function ExportImportTab() {
     setMsg(null);
     try {
       const data = await api.exportMemory(exportFormat);
-      setExportData(data.data);
+      setExportData(typeof data === "string" ? data : JSON.stringify(data ?? ""));
       setMsg(`Exported ${exportFormat} successfully`);
     } catch (e) { setMsg(`Export error: ${e}`); } finally { setExporting(false); }
   };

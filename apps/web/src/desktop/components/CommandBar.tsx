@@ -14,7 +14,7 @@ import { useVoiceStream, type VoiceState } from "@/hooks/useVoiceStream";
 
 interface CommandBarProps {
   /** Called when user executes a message. Conversation workspace intercepts this. */
-  onExecute: (message: string, opts: { agent: string; model: string }) => void;
+  onExecute: (message: string, opts: { agent: string; model?: string }) => void;
   /** Called to submit a goal (autonomous planning + execution). */
   onGoal?: (message: string) => void;
   /** When true, the bar shows a streaming indicator instead of the send button */
@@ -28,7 +28,7 @@ export function CommandBar({ onExecute, onGoal, streaming = false, onStop }: Com
   const [agents, setAgents] = useState<AgentInfo[]>([]);
   const [models, setModels] = useState<ModelInfo[]>([]);
   const [selectedAgent, setSelectedAgent] = useState("default");
-  const [selectedModel, setSelectedModel] = useState("");
+  const [selectedModel, setSelectedModel] = useState<string | undefined>("");
   const [memoryOn, setMemoryOn] = useState(true);
   const [internetOn, setInternetOn] = useState(false);
   const [showAgentMenu, setShowAgentMenu] = useState(false);

@@ -27,8 +27,8 @@ const MOCK_BRIEFING = {
 };
 
 const MOCK_TIMELINE = [
-  { time: "22:08", event: "Planner created execution graph for M17 Dev Mode", agent: "Planner", status: "active" as const },
-  { time: "22:06", event: "Claude generated 13 backend API endpoints", agent: "Claude", status: "active" as const },
+  { time: "22:08", event: "Planner created execution graph for M17 Dev Mode", agent: "Planner", status: "running" as const },
+  { time: "22:06", event: "Claude generated 13 backend API endpoints", agent: "Claude", status: "running" as const },
   { time: "22:05", event: "97 M17 tests passing — integration verified", agent: "QA", status: "completed" as const },
   { time: "22:03", event: "Goal resumed: M17 Integration Pass", agent: "System", status: "completed" as const },
   { time: "21:58", event: "Executor completed workforce adapter implementation", agent: "Executor", status: "completed" as const },
@@ -36,9 +36,9 @@ const MOCK_TIMELINE = [
 ];
 
 const MOCK_GOALS = [
-  { title: "M17 Integration Pass", progress: 72, status: "active" as const, detail: "Tests, APIs, frontend wiring" },
-  { title: "UI Redesign Phase 0", progress: 15, status: "active" as const, detail: "Mission Control first layout" },
-  { title: "M18 Production Readiness", progress: 0, status: "idle" as const, detail: "Docker, CI/CD, monitoring" },
+  { title: "M17 Integration Pass", progress: 72, status: "running" as const, detail: "Tests, APIs, frontend wiring" },
+  { title: "UI Redesign Phase 0", progress: 15, status: "running" as const, detail: "Mission Control first layout" },
+  { title: "M18 Production Readiness", progress: 0, status: "pending" as const, detail: "Docker, CI/CD, monitoring" },
 ];
 
 const QUICK_ACTIONS = [
@@ -162,10 +162,9 @@ export function MissionControl() {
             <TimelineItem
               key={i}
               time={item.time}
-              event={item.event}
-              agent={item.agent}
+              title={item.event}
+              description={`${item.agent} • ${item.time}`}
               status={item.status}
-              isLast={i === MOCK_TIMELINE.length - 1}
             />
           ))}
         </div>

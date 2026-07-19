@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { WorkforcePanel } from "../components/devmode/WorkforcePanel";
 import { TaskGraph } from "../components/devmode/TaskGraph";
 import { api } from "@/lib/api";
-import type { Worker, TaskNode } from "../types";
+import type { Worker, WorkerRole, TaskNode } from "../types";
 import { Users, GitBranch, Zap, Clock, Coins } from "lucide-react";
 
 export function WorkforceWorkspace() {
@@ -23,7 +23,7 @@ export function WorkforceWorkspace() {
         type: "cli" as const,
         command: (w.cli as string) || "",
         status: (w.status as string) === "running" ? "running" : (w.status as string) === "error" ? "error" : (w.status as string) === "busy" ? "busy" : "idle",
-        role: (w.role as string) || "backend",
+        role: ((w.role as string) || "backend") as WorkerRole,
         capabilities: ((w.capabilities as string[]) || []).map((c) => ({
           name: c, description: c, level: "primary" as const,
         })),

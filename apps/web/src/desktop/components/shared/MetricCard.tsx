@@ -1,18 +1,20 @@
 "use client";
 
 import type { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 
 interface MetricCardProps {
   label: string;
   value: string | number;
-  icon?: ReactNode;
+  icon?: LucideIcon | ReactNode;
   trend?: "up" | "down" | "neutral";
   trendValue?: string;
   accent?: boolean;
 }
 
 export function MetricCard({ label, value, icon, trend, trendValue, accent }: MetricCardProps) {
+  const Icon = icon as LucideIcon | undefined;
   return (
     <GlassCard padding="14px" hover>
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
@@ -28,8 +30,8 @@ export function MetricCard({ label, value, icon, trend, trendValue, accent }: Me
             {value}
           </p>
         </div>
-        {icon && (
-          <span style={{ color: "var(--text-muted)", opacity: 0.5 }}>{icon}</span>
+        {Icon && (
+          <span style={{ color: "var(--text-muted)", opacity: 0.5 }}><Icon size={18} /></span>
         )}
       </div>
       {trend && trendValue && (

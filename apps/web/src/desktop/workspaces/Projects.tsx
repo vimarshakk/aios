@@ -45,7 +45,7 @@ export function ProjectsWorkspace() {
 
   const filtered = projects.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.description.toLowerCase().includes(searchQuery.toLowerCase()),
+    (p.description ?? "").toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -119,11 +119,11 @@ export function ProjectsWorkspace() {
                     {project.last_accessed}
                   </span>
                 )}
-                {project.languages.length > 0 && (
-                  <span>{project.languages.join(", ")}</span>
+                {(project.languages ?? []).length > 0 && (
+                  <span>{(project.languages ?? []).join(", ")}</span>
                 )}
-                {project.file_count > 0 && (
-                  <span>{project.file_count.toLocaleString()} files</span>
+                {(project.file_count ?? 0) > 0 && (
+                  <span>{(project.file_count ?? 0).toLocaleString()} files</span>
                 )}
               </div>
             </div>

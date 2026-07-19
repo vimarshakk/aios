@@ -107,7 +107,7 @@ export function AppShell() {
   const isConversation = activeId === "conversation";
 
   // For non-conversation workspaces: command bar sends to conversation
-  const handleGlobalExecute = useCallback((message: string, _opts: { agent: string; model: string }) => {
+  const handleGlobalExecute = useCallback((message: string, _opts: { agent: string; model?: string }) => {
     sessionStorage.setItem("aios-pending-message", message);
     setActive("conversation");
   }, [setActive]);

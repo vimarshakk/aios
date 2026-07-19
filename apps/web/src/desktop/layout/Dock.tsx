@@ -9,11 +9,6 @@ import {
   ChevronLeft, ChevronRight,
 } from "lucide-react";
 
-const ICON_MAP: Record<string, typeof Home> = {
-  Home, Target, MessageSquare, Brain, FolderKanban, Users,
-  Wrench, ScrollText, Settings, Zap, LayoutDashboard,
-};
-
 export function Dock() {
   const { activeId, setActive } = useWorkspaceStore();
   const { appMode, dock, toggleDock } = useLayoutStore();
@@ -56,7 +51,7 @@ export function Dock() {
       {/* Workspace icons */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "2px", overflow: "auto", width: "100%", padding: "0 6px" }}>
         {workspaces.map((ws) => {
-          const Icon = ICON_MAP[ws.icon] || Home;
+          const Icon = ws.icon;
           const active = activeId === ws.id;
           return (
             <button
@@ -86,7 +81,7 @@ export function Dock() {
                 if (!active) e.currentTarget.style.background = "transparent";
               }}
             >
-              <Icon size={18} style={{ flexShrink: 0 }} />
+              <span style={{ flexShrink: 0, display: "inline-flex" }}><Icon size={18} /></span>
               {!dock.collapsed && (
                 <span style={{ fontSize: "0.75rem", fontWeight: active ? 600 : 400, whiteSpace: "nowrap" }}>
                   {ws.title}

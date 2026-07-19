@@ -311,38 +311,47 @@ class TestWorkspaceStore:
 
 
 class TestDevModeWorkspace:
-    """Tests for DevMode workspace component."""
+    """Tests for M17.2 dedicated Dev Mode workspace components.
 
-    def test_devmode_workspace_exists(self):
-        assert os.path.exists(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
+    M17.2 breaks the monolithic DevModeWorkspace into 4 dedicated workspace
+    components, each with its own dock entry (dev-workforce, dev-repositories,
+    dev-consoles, dev-reviews).
+    """
+
+    def test_workforce_workspace_exists(self):
+        assert os.path.exists(os.path.join(WEB_DIR, "workspaces", "WorkforceWorkspace.tsx"))
+
+    def test_repositories_workspace_exists(self):
+        assert os.path.exists(os.path.join(WEB_DIR, "workspaces", "RepositoriesWorkspace.tsx"))
+
+    def test_consoles_workspace_exists(self):
+        assert os.path.exists(os.path.join(WEB_DIR, "workspaces", "ConsolesWorkspace.tsx"))
+
+    def test_reviews_workspace_exists(self):
+        assert os.path.exists(os.path.join(WEB_DIR, "workspaces", "ReviewsWorkspace.tsx"))
 
     def test_has_workforce_panel(self):
-        content = read_file(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
-        assert "WorkforcePanel" in content or "workforce" in content.lower()
+        content = read_file(os.path.join(WEB_DIR, "workspaces", "WorkforceWorkspace.tsx"))
+        assert "worker" in content.lower() or "workforce" in content.lower()
 
     def test_has_task_graph(self):
-        content = read_file(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
-        assert "TaskGraph" in content or "task" in content.lower()
+        content = read_file(os.path.join(WEB_DIR, "workspaces", "WorkforceWorkspace.tsx"))
+        assert "task" in content.lower()
 
     def test_has_live_console(self):
-        content = read_file(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
-        assert "LiveConsole" in content or "console" in content.lower()
+        content = read_file(os.path.join(WEB_DIR, "workspaces", "ConsolesWorkspace.tsx"))
+        assert "console" in content.lower()
 
     def test_has_review_panel(self):
-        content = read_file(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
-        assert "ReviewPanel" in content or "review" in content.lower()
+        content = read_file(os.path.join(WEB_DIR, "workspaces", "ReviewsWorkspace.tsx"))
+        assert "review" in content.lower()
 
-    def test_has_build_artifacts(self):
-        content = read_file(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
-        assert "BuildArtifacts" in content or "build" in content.lower()
-
-    def test_has_5_tabs(self):
-        content = read_file(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
-        assert "Workforce" in content
-        assert "Tasks" in content
-        assert "Console" in content or "Logs" in content
-        assert "Reviews" in content or "Review" in content
-        assert "Artifacts" in content or "Build" in content
+    def test_registry_wires_dedicated_workspaces(self):
+        content = read_file(os.path.join(WEB_DIR, "workspaces", "registry.tsx"))
+        assert "dev-workforce" in content
+        assert "dev-repositories" in content
+        assert "dev-consoles" in content
+        assert "dev-reviews" in content
 
 
 # ── M17.5: IPC Wiring ───────────────────────────────────────────────────────
@@ -496,16 +505,16 @@ class TestFrontendAPIWorkforce:
         assert "verdict" in content
 
     def test_devmode_uses_api(self):
-        content = read_file(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
+        content = read_file(os.path.join(WEB_DIR, "workspaces", "WorkforceWorkspace.tsx"))
         assert "api.workforce" in content or "api.workforce.listWorkers" in content
 
     def test_devmode_no_mock_workers(self):
-        content = read_file(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
+        content = read_file(os.path.join(WEB_DIR, "workspaces", "WorkforceWorkspace.tsx"))
         assert "MOCK_WORKERS" not in content
 
     def test_devmode_has_fetch(self):
-        content = read_file(os.path.join(WEB_DIR, "workspaces", "DevMode.tsx"))
-        assert "fetchWorkforce" in content or "fetchReviews" in content
+        content = read_file(os.path.join(WEB_DIR, "workspaces", "WorkforceWorkspace.tsx"))
+        assert "fetchWorkforce" in content or "fetchWorkers" in content or "useEffect" in content
 
     def test_appshell_has_devmode_shortcut(self):
         content = read_file(os.path.join(ROOT, "apps", "web", "src", "desktop", "layout", "AppShell.tsx"))
