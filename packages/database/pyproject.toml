@@ -1,0 +1,17 @@
+[project]
+name = "aios-database"
+version = "0.3.0"
+description = "AIOS database layer — SQLAlchemy async engine, sessions, and ORM models"
+requires-python = ">=3.11"
+dependencies = [
+    "sqlalchemy[asyncio]>=2.0",
+    "asyncpg>=0.29",
+    "alembic>=1.13",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aios"]
