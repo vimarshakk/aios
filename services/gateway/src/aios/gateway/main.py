@@ -818,6 +818,143 @@ async def briefing_trigger() -> BriefingTriggerResponse:
 
 
 # ---------------------------------------------------------------------------
+# M17 — Workforce / CLI / Review endpoints
+# ---------------------------------------------------------------------------
+
+# In-memory workforce store (mirrors desktop WorkforceManager for web-only mode)
+_DEFAULT_WORKFORCE_ROLES: list[dict[str, Any]] = [
+    {"id": "architect", "role": "architect", "capabilities": ["architecture", "system-design", "planning"], "status": "idle"},
+    {"id": "backend", "role": "backend", "capabilities": ["coding", "api-design", "databases"], "status": "idle"},
+    {"id": "frontend", "role": "frontend", "capabilities": ["coding", "ui", "css", "react"], "status": "idle"},
+    {"id": "qa", "role": "qa", "capabilities": ["testing", "qa", "automation"], "status": "idle"},
+    {"id": "devops", "role": "devops", "capabilities": ["deployment", "ci-cd", "infrastructure"], "status": "idle"},
+    {"id": "researcher", "role": "researcher", "capabilities": ["research", "web-search", "analysis"], "status": "idle"},
+    {"id": "designer", "role": "designer", "capabilities": ["design", "ui-ux", "figma"], "status": "idle"},
+    {"id": "reviewer", "role": "reviewer", "capabilities": ["code-review", "quality", "security"], "status": "idle"},
+]
+
+_workforce_store: list[dict[str, Any]] = list(_DEFAULT_WORKFORCE_ROLES)
+_review_store: list[dict[str, Any]] = []
+
+
+@app.get("/workforce/workers")
+async def workforce_list_workers() -> list[dict[str, Any]]:
+    """List all registered workers in the workforce."""
+    return list(_workforce_store)
+
+
+@app.get("/workforce/workers/{worker_id}")
+async def workforce_get_worker(worker_id: str) -> dict[str, Any]:
+    """Get a single worker by ID."""
+    for w in _workforce_store:
+        if w["id"] == worker_id:
+            return w
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail=f"worker {worker_id!r} not found")
+
+
+@app.get("/workforce/capability/{capability}")
+async def workforce_find_by_capability(capability: str) -> list[dict[str, Any]]:
+    """Find workers that have a given capability."""
+    return [w for w in _workforce_store if capability in w.get("capabilities", [])]
+
+
+@app.post("/workforce/assign")
+async def workforce_assign_task(body: dict[str, Any]) -> dict[str, Any]:
+    """Assign a task to a worker."""
+    worker_id = body.get("worker_id", "")
+    for w in _workforce_store:
+        if w["id"] == worker_id:
+            w["status"] = "busy"
+            return {"ok": True, "worker_id": worker_id, "task": body.get("task", "")}
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail=f"worker {worker_id!r} not found")
+
+
+@app.post("/workforce/complete")
+async def workforce_complete_task(body: dict[str, Any]) -> dict[str, Any]:
+    """Mark a worker's task as complete."""
+    worker_id = body.get("worker_id", "")
+    for w in _workforce_store:
+        if w["id"] == worker_id:
+            w["status"] = "idle"
+            return {"ok": True, "worker_id": worker_id}
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail=f"worker {worker_id!r} not found")
+
+
+@app.post("/workforce/fail")
+async def workforce_fail_task(body: dict[str, Any]) -> dict[str, Any]:
+    """Mark a worker's task as failed."""
+    worker_id = body.get("worker_id", "")
+    for w in _workforce_store:
+        if w["id"] == worker_id:
+            w["status"] = "error"
+            return {"ok": True, "worker_id": worker_id}
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail=f"worker {worker_id!r} not found")
+
+
+@app.get("/workforce/state")
+async def workforce_state() -> dict[str, Any]:
+    """Get full workforce state."""
+    return {"workers": list(_workforce_store), "count": len(_workforce_store)}
+
+
+@app.get("/cli/active")
+async def cli_active() -> list[dict[str, Any]]:
+    """List active CLI processes."""
+    return []
+
+
+@app.post("/cli/spawn")
+async def cli_spawn(body: dict[str, Any]) -> dict[str, Any]:
+    """Spawn a new CLI process."""
+    return {"ok": True, "pid": 0, "message": "CLI spawn simulated in web mode"}
+
+
+@app.get("/review/active")
+async def review_active() -> list[dict[str, Any]]:
+    """List active reviews."""
+    return [r for r in _review_store if r.get("status") != "approved"]
+
+
+@app.post("/review/create")
+async def review_create(body: dict[str, Any]) -> dict[str, Any]:
+    """Create a new review request."""
+    import uuid
+    review = {
+        "id": str(uuid.uuid4()),
+        "title": body.get("title", "Untitled Review"),
+        "description": body.get("description", ""),
+        "status": "pending",
+        "verdict": None,
+        "rounds": 0,
+        "notes": [],
+    }
+    _review_store.append(review)
+    return review
+
+
+@app.post("/review/{review_id}/verdict")
+async def review_submit_verdict(review_id: str, body: dict[str, Any]) -> dict[str, Any]:
+    """Submit a verdict on a review."""
+    for r in _review_store:
+        if r["id"] == review_id:
+            r["verdict"] = body.get("verdict", "approved")
+            r["status"] = body.get("verdict", "approved")
+            return r
+    from fastapi import HTTPException
+    raise HTTPException(status_code=404, detail=f"review {review_id!r} not found")
+
+
+@app.get("/review/state")
+async def review_state() -> dict[str, Any]:
+    """Get full review state."""
+    return {"reviews": list(_review_store), "count": len(_review_store)}
+
+
+# ---------------------------------------------------------------------------
 # Run
 # ---------------------------------------------------------------------------
 

@@ -91,9 +91,10 @@ export function AppShell() {
       }
 
       // ⌘⇧D — Toggle application mode (Normal ↔ Developer)
+      const toggleDevMode = toggleAppMode; // alias for backward compat
       if (mod && e.shiftKey && e.key.toLowerCase() === "d") {
         e.preventDefault();
-        toggleAppMode();
+        toggleDevMode();
         return;
       }
     };
