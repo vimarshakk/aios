@@ -44,7 +44,7 @@ voice = [
     "kokoro>=0.9",
     "silero-vad>=6.0",
     "livekit-agents[openai,cartesia,deepgram]>=1.0",
-    "sounddevice>=0.5",
+    "sounddevice>=0.5.5",
     "numpy>=2.0",
 ]
 ml = [
