@@ -21,7 +21,7 @@
     "electron-store": "^10.0.0"
   },
   "devDependencies": {
-    "electron": "^35.3.0",
+    "electron": "^43.2.0",
     "electron-builder": "^26.0.12",
     "tsx": "^4.19.0",
     "typescript": "^5.8.0",
