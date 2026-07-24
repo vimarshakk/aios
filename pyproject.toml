@@ -22,7 +22,7 @@ dependencies = [
     "sentence-transformers>=3.4",
     "livekit-agents>=1.0",
     "faster-whisper>=1.1",
-    "kokoro>=0.9",
+    "kokoro>=0.9.4",
     "silero-vad>=6.0",
     "playwright>=1.49",
     "mcp>=1.2",
@@ -41,7 +41,7 @@ dependencies = [
 [project.optional-dependencies]
 voice = [
     "faster-whisper>=1.1",
-    "kokoro>=0.9",
+    "kokoro>=0.9.4",
     "silero-vad>=6.0",
     "livekit-agents[openai,cartesia,deepgram]>=1.0",
     "sounddevice>=0.5",
