@@ -34,7 +34,7 @@ dependencies = [
     "python-jose[cryptography]>=3.3",
     "passlib[bcrypt]>=1.7",
     "python-multipart>=0.0.18",
-    "tomlkit>=0.13",
+    "tomlkit>=0.15.1",
     "aiofiles>=24.1",
 ]
 
